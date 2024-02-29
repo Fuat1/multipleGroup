@@ -54,8 +54,8 @@ While the core functionality and nice-to-have features were addressed, there are
 1. **Clone the repository**
 
    ```bash
-   git clone https://yourrepository.git
-   cd yourrepository
+   git clone https://github.com/Fuat1/multipleGroup
+   cd multipleGorup
    ```
 
 2. **Start the Docker Containers**
