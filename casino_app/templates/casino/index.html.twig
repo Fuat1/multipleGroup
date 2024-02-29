@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %} {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div id="loadingIndicator" style="
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 9999;
+	">
+    <div style="
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		">
+        <img src="./images/loading.png" class="loading-icon" alt="Loading...">
+        <p style="color: white; text-align: center">Loading...</p>
+    </div>
+</div>
+{% include "./casino/header.html.twig" %} {% if gameDetails is not null %}
+<div id="gameModal" class="modal" style="display: block">
+    {% include "./casino/game_details.html.twig" with {'game': gameDetails} %}
+</div>
+{% endif %} {% include "./casino/games_list.html.twig" %}
+<div id="pagination" class="pagination-container"></div>
+{% include './casino/pagination.html.twig' %}
+<script>
+  	$(document).ready(function () {
+
+
+  		function loadGames(page) {
+			var searchTerm = $('#gameSearch').val();
+
+			$.ajax({
+				url: '{{ path('game_search') }}',
+				type: 'GET',
+				data: {
+					search: searchTerm,
+					page: page
+				},
+				beforeSend: function() {
+					$('#loadingIndicator').show(); 
+				},
+				success: function (response) {
+						var data = typeof response === 'string' ? JSON.parse(response) : response;
+						console.log(response); 
+					$('#loadingIndicator').hide(); 
+
+						$('#searchResults').html(data.html);
+						var totalGames = data.totalGames;
+						var totalPages = Math.ceil(totalGames / pageSize);
+						updatePaginationControls(page, totalPages);
+				}
+			});
+  		}
+
+  		function loadGameDetails(id) {
+			$.ajax({
+				url: '{{ path('game_details') }}',
+				type: 'GET',
+				data: {
+					id: id
+				},
+				beforeSend: function() {
+					$('#loadingIndicator').show(); 
+				},
+				complete: function() {
+					$('#loadingIndicator').hide(); 
+				},
+				success: function (response) {
+					$('#gameDetails').html(response);
+					$('#gameModal').css('display', 'block'); 
+				},
+				error: function (xhr, status, error) {
+					console.error("Error loading game details:", error);
+				}
+			});
+		}
+
+  		$(document).on('click', '.game-tile', function () {
+			var gameId = $(this).find('.game-name').data('id');
+			loadGameDetails(gameId);
+			$('#gameModal').css('display', 'block');
+		});
+
+  		$('.close').click(function () {
+  			$('#gameModal').css('display', 'none');
+  		});
+
+
+  		$('#gameSearch').on('input', function () {
+			var searchTerm = $(this).val();
+			loadGames(1, searchTerm); 
+  		});
+
+  		$(document).on('click', '.page-link', function (e) {
+			e.preventDefault();
+			var selectedPage = $(this).data('page');
+			loadGames(selectedPage);
+  		});
+
+  		loadGames(1);
+  	});
+</script>
+{% endblock %}

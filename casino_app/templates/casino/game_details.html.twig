@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="game-details">
+    <h1>{{ game.name }}</h1>
+    <img src="{{ game.icon_2 }}" alt="Game Icon">
+    <div class="game-info">
+        <h3>
+            Status:
+            <span class="game-status">{{ game.status | capitalize }}</span>
+        </h3>
+        <h3>
+            Provider:
+            <span class="game-provider">{{ game.provider }}</span>
+        </h3>
+        {% if game.cats is defined and game.cats is not empty %}
+        <h3>Categories:</h3>
+        <ul>
+            {% for cat in game.cats %}
+            <li class="game-info">{{ cat.title }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

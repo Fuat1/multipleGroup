@@ -1,0 +1,557 @@
+  body {
+      background-color: rgb(109, 113, 111);
+      font-family: "Verdana", sans-serif;
+  }
+
+  #searchResults {
+      margin-right: 50px;
+      margin-left: 50px;
+  }
+
+  .game-tile {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      padding: 10px;
+  }
+
+  .game-tile:hover {
+      transform: scale(1.05);
+  }
+
+  .game-tile img {
+      width: 100%;
+      display: block;
+  }
+
+  #header {
+      background: #202020;
+      /* Dark background color */
+      color: #fff;
+      padding: 20px 0;
+      /* Increased padding for greater height */
+      width: 100%;
+      /* Ensure it's full width */
+      box-sizing: border-box;
+      /* Make sure padding doesn't affect the total width */
+  }
+
+  .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      /* This will center the header content */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* Adjust as per design */
+      width: 100%;
+      padding: 0 20px;
+      /* Add some padding on the sides */
+  }
+
+  /* Rest of the header styles */
+
+  #menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      /* This will space out the menu items evenly */
+      max-width: 1200px;
+      /* Max width to prevent the menu from stretching too wide */
+      margin: 0 auto;
+      /* Center the menu */
+      padding: 0 20px;
+      /* Padding on the sides */
+  }
+
+  /* Rest of the styles for #menu, .nav-link, etc... */
+
+  .header-logo {
+      /* Add your logo styles here */
+      margin-left: 20px;
+      margin-right: 20px;
+      /* Pushes everything else to the right */
+  }
+
+  .nav-link {
+      color: white;
+      margin-right: 20px;
+      text-decoration: none;
+  }
+
+  .search-container {
+      position: relative;
+  }
+
+  .searchbox {
+
+      position: relative;
+      margin-left: auto;
+      /* Aligns the search box to the right */
+  }
+
+  #gameSearch {
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+      width: 200px;
+      /* Adjust the width as needed */
+  }
+
+  .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+  }
+
+  .pagination-container {
+      display: flex;
+      justify-content: center;
+      /* Center pagination container */
+      align-items: center;
+      margin-top: 20px;
+      /* Add some space on the top */
+  }
+
+  .page-link {
+      margin: 0 5px;
+      /* Spacing between page numbers */
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      /* Light grey border */
+      color: #333;
+      /* Dark text color */
+      text-decoration: none;
+      /* Remove underline from links */
+      border-radius: 5px;
+      /* Rounded corners for the links */
+  }
+
+  .page-link:hover,
+  .page-link:focus {
+      background-image: linear-gradient(to right,
+              #e0e0e0,
+              #f8f8f8);
+      /* Gradient from light grey to lighter grey */
+      outline: none;
+      /* Remove outline from focused links */
+  }
+
+  .page-link.active {
+      background-image: linear-gradient(to right,
+              #0062cc,
+              #0088ff);
+      /* Gradient for active link */
+      color: white;
+      /* Active link text color */
+  }
+
+  .page-ellipsis {
+      padding: 0 5px;
+  }
+
+  /* Media query for responsive design */
+  @media (max-width: 600px) {
+      .pagination-container {
+          flex-wrap: wrap;
+          /* Allow pagination items to wrap on small screens */
+      }
+  }
+
+  .game-list h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+  }
+
+  .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,
+              minmax(200px, 1fr));
+      /* Adjust minmax for your game tile size */
+      gap: 10px;
+      padding: 0 20px;
+  }
+
+  .game-tile {
+      background: #333;
+      /* Dark tile background */
+      color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      /* For image */
+  }
+
+  .game-tile img {
+      width: 100%;
+      display: block;
+      height: auto;
+      /* Maintain aspect ratio */
+  }
+
+  .game-info {
+      background: linear-gradient(to right,
+              #872323,
+              #570f0f);
+      /* Gradient from light grey to lighter grey */
+      color: #fff;
+      /* White text */
+      padding: 10px 0;
+      /* Padding above and below the title */
+      margin-top: -5px;
+      /* Negative margin to bring it closer to the game tile */
+      text-align: center;
+      /* Center the title text */
+      border-radius: 0 0 5px 5px;
+      /* Only round the bottom corners */
+  }
+
+  .game-info h3 {
+      margin: 0;
+      /* Remove default margin */
+      font-size: 1.2em;
+      /* Adjust font size as needed */
+  }
+
+  .play-btn {
+      display: block;
+      background: #e50914;
+      /* Bright color for CTA */
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: center;
+      border-radius: 5px;
+  }
+
+  /* CSS for the modal */
+  #gameModal {
+      display: none;
+      /* Hide the modal by default */
+      position: fixed;
+      /* Position the modal relative to the viewport */
+      z-index: 8888;
+      /* Ensure the modal is on top of everything */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      /* Enable scrolling if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black with opacity */
+  }
+
+  #gameModal {
+      display: none;
+      /* Hide the modal by default */
+      position: fixed;
+      /* Position the modal relative to the viewport */
+      z-index: 8888;
+      /* Ensure the modal is on top of everything */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      /* Enable scrolling if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black with opacity */
+  }
+
+
+  /* Close button */
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  /* Image container */
+  .game-image {
+      flex: 1;
+      /* Occupy 50% of the width */
+      padding-right: 20px;
+      /* Add some space between image and details */
+  }
+
+
+  /* Ensure the image fills its container */
+  .game-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      /* Center the image horizontally */
+  }
+
+
+  /* Close button */
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  /* Image container */
+  .game-image {
+      flex: 1;
+      /* Occupy 50% of the width */
+      padding-right: 20px;
+      /* Add some space between image and details */
+  }
+
+
+
+  /* Ensure the image fills its container */
+  .game-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      /* Center the image horizontally */
+  }
+
+  .loading-icon {
+      width: 100px;
+      height: 100px;
+  }
+
+  .modal {
+      display: none;
+      /* Initially hidden */
+      position: fixed;
+      /* Stay in place */
+      z-index: 10000;
+      /* Sit on top of everything */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+  }
+
+  .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      /* Adjust if necessary to center vertically */
+      padding: 20px;
+      /* Padding inside the modal */
+      border: 1px solid #888;
+      width: 60%;
+      /* Adjust based on your preference */
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      display: flex;
+      /* Use flexbox to align children */
+      flex-direction: column;
+      /* Stack children vertically */
+      align-items: center;
+      /* Center-align the flex items */
+  }
+
+  .close {
+      align-self: flex-end;
+      /* Align close button to the right */
+      margin-bottom: 20px;
+      /* Space between close button and the content below */
+  }
+
+  #gameDetails {
+      width: 100%;
+      /* Use the full width of the modal content */
+      padding: 10px 0;
+      /* Add some padding at the top and bottom */
+      box-sizing: border-box;
+      /* Include padding and border in the element's total width and height */
+      display: flex;
+      /* Use flexbox to align children */
+      flex-direction: column;
+      /* Stack children vertically */
+      align-items: center;
+  }
+
+  /* Add specific styles for child elements of #gameDetails if needed */
+  #gameDetails>* {
+      margin-bottom: 20px;
+      /* Add space between each child */
+  }
+
+  /* Remove margin from the last child to avoid extra space at the bottom */
+  #gameDetails>*:last-child {
+      margin-bottom: 0;
+  }
+
+  .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  /* Add Animation */
+  @keyframes animatetop {
+      from {
+          top: -300px;
+          opacity: 0
+      }
+
+      to {
+          top: 0;
+          opacity: 1
+      }
+  }
+
+  .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  .game-image img {
+      width: 100%;
+      /* Adjust the size of the image */
+      max-height: 400px;
+      /* Adjust based on your preference */
+      object-fit: cover;
+      /* Cover the holder */
+      border-radius: 5px;
+      margin-bottom: 20px;
+      /* Space between image and text */
+  }
+
+  .game-details-container {
+      text-align: center;
+      /* Center-align the text */
+  }
+
+  .game-details {
+      padding: 20px;
+  }
+
+  .game-details h2,
+  .game-details p {
+      margin: 5px 0;
+      /* Spacing */
+  }
+
+  .game-details h2 {
+      font-size: 24px;
+      /* Larger font size for the game title */
+      color: #333;
+      /* Dark color for text */
+  }
+
+  .game-details p {
+      font-size: 16px;
+      /* Suitable font size for descriptions */
+      color: #666;
+      /* Lighter text color for descriptions */
+  }
+
+  @media screen and (max-width: 768px) {
+      .modal-content {
+          width: 90%;
+          /* Make modal wider on smaller screens */
+      }
+  }
+
+  .game-info {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      color: #333;
+
+  }
+
+  .game-info h3 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 10px;
+  }
+
+  .game-info span {
+      background: #e0e0e0;
+      color: #555;
+      padding: 5px 10px;
+      border-radius: 5px;
+  }
+
+  .game-details {
+      text-align: center;
+  }
+
+  .game-status {
+      background: #4CAF50;
+      /* Green background for positive status */
+      color: white;
+  }
+
+  .game-provider {
+      background: #2196F3;
+      /* Blue background for provider */
+      color: white;
+  }
+
+  .game-info ul {
+      list-style-type: none;
+      padding: 0;
+  }
+
+  .game-info ul li {
+      background: #ddd;
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 5px;
+  }

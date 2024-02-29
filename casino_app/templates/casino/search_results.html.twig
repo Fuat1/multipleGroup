@@ -1,0 +1,13 @@
+<div class="games-grid">
+    {% for game in games %}
+    <div class="game-tile">
+        <img src="{{ game.getImage() }}" alt="{{ game.getName() }}">
+        <div class="game-info">
+            <h3 class="game-name" data-id="{{ game.getId() }}">
+                {{ game.getName() }}
+				{{ game.getId() }}
+            </h3>
+        </div>
+    </div>
+    {% endfor %}
+</div>

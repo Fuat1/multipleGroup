@@ -1,0 +1,72 @@
+<div id="pagination" class="pagination-container"></div>
+<script>
+  var page = 1;
+  var pageSize = 24;
+
+  function updatePaginationControls(currentPage, totalPages) {
+    var paginationContainer = $("#pagination");
+
+    $("#pagination").empty();
+    if (totalPages <= 1) {
+      paginationContainer.hide();
+      return;
+    } else {
+      paginationContainer.show();
+    }
+    if (currentPage > 1) {
+      $("#pagination").append(
+        '<a href="#" class="page-link" data-page="' +
+          (currentPage - 1) +
+          '">Prev</a>'
+      );
+    } else {
+      $("#pagination").append('<span class="page-ellipsis">&laquo;</span>');
+    }
+
+    let startPage = currentPage - 2 <= 0 ? 1 : currentPage - 2;
+    let endPage = currentPage + 2 >= totalPages ? totalPages : currentPage + 2;
+
+    if (startPage > 1) {
+      $("#pagination").append(
+        '<a href="#" class="page-link" data-page="1">1</a>'
+      );
+      if (startPage > 2)
+        $("#pagination").append('<span class="page-ellipsis">...</span>');
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      $("#pagination").append(
+        '<a href="#" class="page-link ' +
+          (i === currentPage ? "active" : "") +
+          '" data-page="' +
+          i +
+          '">' +
+          i +
+          "</a>"
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1)
+        $("#pagination").append('<span class="page-ellipsis">...</span>');
+
+      $("#pagination").append(
+        '<a href="#" class="page-link" data-page="' +
+          totalPages +
+          '">' +
+          totalPages +
+          "</a>"
+      );
+    }
+
+    if (currentPage < totalPages) {
+      $("#pagination").append(
+        '<a href="#" class="page-link" data-page="' +
+          (currentPage + 1) +
+          '">Next</a>'
+      );
+    } else {
+      $("#pagination").append('<span class="page-ellipsis">&raquo;</span>');
+    }
+  }
+</script>
